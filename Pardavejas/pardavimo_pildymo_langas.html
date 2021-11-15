@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Dovanų čekio kūrimo langas</title>
+        <title>Pardavimo pildymo langas</title>
     </head>
     <body>
         <a href="pardavejo_langas.html">Pardavėjo langas</a>
@@ -11,11 +11,16 @@
         <a href="prekiu_paieskos_langas.html">Prekių paieška</a>
         <a href="pardavimo_pildymo_langas.html">Prekių pardavimas</a>
         <a href="uzsakymu_priemimo_langas.html">Užsakymų priėmimas</a>
-        <h1>Dovanų čekio kūrimo langas</h1>
+        <h1>Pardavimo pildymo langas</h1>
         <form>
-            <label for="verte">Dovanų čekio vertė</label>
-            <input type="number" name="verte" id="verte">
-            <input type="button" value="Pateikti" onclick="document.location.href='sukurto_dovanu_cekio_langas.html'" />
+            <select name="payment">
+                <option>Grynais</option>
+                <option>Kortele</option>
+                <option>Grynais + dovanų čekiu</option>
+            </select>
+            <label for="code">Produkto kodas</label>
+            <input type="number" name="code" id="code">
+            <input type="button" value="Pateikti" onclick="document.location.href='pardavimo_cekio_langas.html'" />
         </form>
     </body>
 </html>
