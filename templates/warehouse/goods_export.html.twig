@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div>
+
+    </div>
+
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-12">
+
+                {% if errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in errors %}
+                            {{ error }} <br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if pending == null %}
+                    <div class="alert alert-info" role="alert">
+                        Laukiamų siuntimų nėra.
+                    </div>
+                {% endif %}
+                {% if pending %}
+                    {% for p in pending %}
+                        <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Barkodas</th>
+                            <th>Pavadinimas</th>
+                            <th>Vnt. Kaina</th>
+                            <th>Sandėlyje yra</th>
+                            <th>Siunčiama</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>{{ p.barkodas }}</td>
+                            <td>{{ p.pavadinimas }}</td>
+                            <td>{{ p.kaina }}</td>
+                            <td>{{ p.yra }}</td>
+                            <td>{{ p.reikia }}</td>
+                            <td><a href="/warehouse/export/send/{{ p.id }}/{{ p.reikia }}">Siųsti</a></td>
+                        </tr>
+                    {% endfor %}
+
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block navigation %}
+    {{ parent() }}
+{% endblock %}
+
+

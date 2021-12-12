@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div>
+
+    </div>
+
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-12">
+
+                {% if errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in errors %}
+                            {{ error }} <br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    <div class="form-control-sm">
+                        <label for="pavadinimas">Pavadinimas</label>
+                        <input type="text" class="form-control" name="pavadinimas" id="pavadinimas" placeholder="Prekės pavadinimas">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ieškoti</button>
+                </form>
+
+                {% if found %}
+                    {% for f in found %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Barkodas</th>
+                            <th>Pavadinimas</th>
+                            <th>Vnt. Kaina</th>
+                            <th>Kiekis</th>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td>{{ f.barkodas }}</td>
+                            <td>{{ f.pavadinimas }}</td>
+                            <td>{{ f.kaina }}</td>
+                            <td>{{ f.kiekis }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block navigation %}
+    {{ parent() }}
+{% endblock %}
+
+

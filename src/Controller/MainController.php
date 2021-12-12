@@ -6,17 +6,14 @@ namespace App\Controller;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    class MainController extends AbstractController {
-
+    class MainController extends AbstractController
+    {
         /**
          * @Route("/", name="login")
          */
 
-        public function index() {
-
+        public function index(): Response
+        {
             return $this->render('main/main.html.twig');
         }
-
     }
-
-?>

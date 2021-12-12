@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div align="center">
+        <table>
+            <tr>
+                <td>Pavadinimas</td>
+                <td>
+                    <input type="text" placeholder="name">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div align="center"><button class="btn btn-success">Ieškoti</button></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
