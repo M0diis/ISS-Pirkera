@@ -31,7 +31,7 @@ class ProductSearchController extends AbstractController {
 
             $data = null;
             if (!$productName) {
-                $query = "SELECT id, barkodas, pavadinimas FROM prekes";
+                $query = "SELECT id_preke, barkodas, pavadinimas FROM Prekes";
                 $res = $this->connection->query($query);
                 $results = [];
 
@@ -43,7 +43,7 @@ class ProductSearchController extends AbstractController {
                 $data = $results;
 
             } else {
-                $query = "SELECT id, barkodas, pavadinimas FROM prekes WHERE pavadinimas = ?";
+                $query = "SELECT id_Preke, barkodas, pavadinimas FROM Prekes WHERE pavadinimas = ?";
                 $stmt = $this->connection->prepare($query);
                 $stmt->bind_param("s", $productName);
                 $stmt->execute();
