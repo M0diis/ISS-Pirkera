@@ -11,14 +11,8 @@
             "./config/routes/annotations.yaml"
         ]
     },
-    "doctrine/inflector": {
-        "version": "2.0.4"
-    },
     "doctrine/lexer": {
         "version": "1.2.1"
-    },
-    "nikic/php-parser": {
-        "version": "v4.13.2"
     },
     "psr/cache": {
         "version": "2.0.0"
@@ -44,9 +38,12 @@
             "./config/packages/sensio_framework_extra.yaml"
         ]
     },
+<<<<<<< HEAD:symfony.lock
     "symfony/asset": {
         "version": "v5.4.0"
     },
+=======
+>>>>>>> 1b626678fec9f7bd77571cdd25c456e613906169:Pirketa/symfony.lock
     "symfony/cache": {
         "version": "v5.4.0"
     },
@@ -128,15 +125,6 @@
     },
     "symfony/http-kernel": {
         "version": "v5.4.0"
-    },
-    "symfony/maker-bundle": {
-        "version": "1.36",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
-        }
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.23.1"

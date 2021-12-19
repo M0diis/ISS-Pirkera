@@ -8,7 +8,10 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "sensio/framework-extra-bundle": "^6.2",
+<<<<<<< HEAD:composer.json
         "symfony/asset": "5.4.*",
+=======
+>>>>>>> 1b626678fec9f7bd77571cdd25c456e613906169:Pirketa/composer.json
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",
         "symfony/flex": "^1.17|^2",
@@ -16,9 +19,6 @@
         "symfony/runtime": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/yaml": "5.4.*"
-    },
-    "require-dev": {
-        "symfony/maker-bundle": "^1.36"
     },
     "config": {
         "optimize-autoloader": true,

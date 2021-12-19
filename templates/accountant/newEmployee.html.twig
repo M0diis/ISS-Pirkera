@@ -1,0 +1,33 @@
+{% extends 'accountant/baseAccountant.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
+    <style>
+
+
+        body {
+            text-align: center;
+        }
+
+        .align {
+            margin-top: 10%;
+            display: inline-block;
+        }
+        button {
+            margin-top: 5%;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    {% for message in app.flashes('successItem') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="align">
+        {{ form_start(formEmployee) }}
+        {{ form_widget(formEmployee) }}
+        {{ form_end(formEmployee) }}
+    </div>
+{% endblock %}

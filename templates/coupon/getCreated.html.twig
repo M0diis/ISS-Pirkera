@@ -1,0 +1,9 @@
+{% extends 'clerk/baseClerk.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <h1>Successfully created coupon</h1>
+    <p>Your code is {{ code }}.</p>
+{% endblock %}

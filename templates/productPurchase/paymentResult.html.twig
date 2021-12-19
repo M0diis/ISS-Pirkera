@@ -1,0 +1,21 @@
+{% extends 'clerk/baseClerk.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <h1>Payment status</h1>
+    {% if errors %}
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if success %}
+        <p>Successfully paid for order</p>
+        {% if return %}
+            <p>Returned ${{ return }}</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

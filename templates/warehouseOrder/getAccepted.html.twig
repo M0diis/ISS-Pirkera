@@ -1,0 +1,10 @@
+{% extends 'clerk/baseClerk.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <h1>Order successfully updated</h1>
+    <p>Order number is {{ orderNum }}</p>
+    <p>State was updated to {{ newState }}</p>
+{% endblock %}
