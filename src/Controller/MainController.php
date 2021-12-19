@@ -52,7 +52,7 @@ class MainController extends AbstractController
             $vadovas = $bossRepo->findOneBy(['vartotojoVardas' => $username]);
 
             if (!is_null($pardavejas)) {
-                return $this->render('');
+                return $this->render('clerk/baseClerk.html.twig');
             } else {
                 if (!is_null($sandelininkas)) {
                     return $this->render('');

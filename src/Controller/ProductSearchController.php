@@ -16,7 +16,7 @@ class ProductSearchController extends AbstractController {
         {
             $hostname = "localhost";
             $username = "root";
-            $password = "Shinjitai99";
+            $password = "";
             $database = "pirketa";
             $port = 3306;
 
