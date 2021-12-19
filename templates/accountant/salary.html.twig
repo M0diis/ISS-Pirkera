@@ -1,0 +1,101 @@
+{% extends "accountant/baseAccountant.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
+    <style>
+
+
+        body {
+            text-align: center;
+        }
+
+        .align {
+            margin-top: 10%;
+            display: inline-block;
+        }
+
+        button {
+            margin-top: 5%;
+        }
+
+        table tr td {
+            border: 1px solid black;
+            font-size: 18px;
+            color: black;
+        }
+
+        td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .salary {
+            color: green;
+        }
+
+    </style>
+{% endblock %}
+
+    {% block navigation %}
+        {{ parent() }}
+    {% endblock %}
+
+{% block body %}
+    {% if pardavejas is defined %}
+        {% else %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+    {% endif %}
+    <div class="align">
+        {{ form_start(formSalary) }}
+        {{ form_widget(formSalary) }}
+        {{ form_end(formSalary) }}
+
+        <table style="margin-top: 30px;">
+            <tr>
+                <td>VARDAS</td>
+                <td>
+                    {% if pardavejas is defined %}
+                        {% if pardavejas %}
+                            {{ pardavejas.vardas }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>PAVARDĖ</td>
+                <td>
+                    {% if pardavejas is defined %}
+                        {% if pardavejas %}
+                            {{ pardavejas.pavarde }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>DARBO LAIKAS</td>
+                <td>
+                    {% if pardavejas is defined %}
+                        {% if pardavejas %}
+                            {{ pardavejas.darboLaikas }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>ATLYGINIMAS</td>
+                <td class="salary">
+                    {% if pardavejas is defined %}
+                        {% if pardavejas %}
+                            {{ pardavejas.atlyginimas}}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
