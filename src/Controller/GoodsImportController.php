@@ -66,7 +66,7 @@ class GoodsImportController extends AbstractController
         $pavadinimas = $request->request->get('pavadinimas');
         $sandelis = $request->request->get('sandelis');
 
-        $stmt = $this->conn->prepare("INSERT INTO prekes (barkodas, kiekis, kaina, pavadinimas, sandelis) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO prekes (barkodas, kiekis, kaina, pavadinimas, fk_Sandelisid_Sandelis, fk_Buhalterisid_Naudotojas) VALUES (?, ?, ?, ?, ?, 1)");
 
         $stmt->bind_param("sssss", $barkodas, $kiekis, $kaina, $pavadinimas, $sandelis);
         $stmt->execute();
