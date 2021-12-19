@@ -53,7 +53,7 @@ class GoodsExportController extends AbstractController
             $id = $curr_pending[$p]['id'];
             $required = $curr_pending[$p]['kiekis'];
 
-            $stmt = $this->conn->prepare("SELECT * FROM prekes WHERE id = ?");
+            $stmt = $this->conn->prepare("SELECT * FROM prekes WHERE barkodas = ?");
             $stmt->bind_param("s", $id);
             $stmt->execute();
 
