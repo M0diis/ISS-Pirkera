@@ -92,7 +92,7 @@ class GoodsExportController extends AbstractController
 
         $pending = $session->get('pending');
 
-        $res = $this->conn->query("UPDATE prekes SET kiekis = kiekis - $amount WHERE id = $id");
+        $res = $this->conn->query("UPDATE prekes SET kiekis = kiekis - $amount WHERE barkodas = $id");
 
         $exported = null;
 
