@@ -44,17 +44,31 @@
         {{ form_end(formReport) }}
 
         <table style="margin-top: 30px">
-            <tr>
-                <td>Dirbę darbuotojai</td>
-                <td>
+            <th>
+                <tr>
+                    <td>Darbuotojas</td>
+                    <td>Apyvarta</td>
+                </tr>
+            </th>
                     {% if parduotuves is defined %}
                         {% for parduotuve in parduotuves %}
-                            {{ parduotuve.vardas }}
-                            {{ parduotuve.pavarde }}<br>
+                            <tr>
+                                <td>
+                                    {{ parduotuve.vardas }}
+                                    {{ parduotuve.pavarde }}
+                                </td>
+                                {% if parduotuve.menesineApyvarta > 0 %}
+                                <td class="salary">
+                                    {{ parduotuve.menesineApyvarta }} EUR
+                                </td>
+                                {% else %}
+                                    <td style="color: red">
+                                        {{ parduotuve.menesineApyvarta }} EUR
+                                    </td>
+                                {% endif %}
+                            </tr>
                         {% endfor %}
                     {% endif %}
-                </td>
-            </tr>
             <tr>
                 <td>Apyvarta</td>
                 <td class="salary">

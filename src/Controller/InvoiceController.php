@@ -22,6 +22,7 @@ class InvoiceController extends AbstractController
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
         $invoice = new InvoicePrinter();
+        $saskaitaFaktura = new SaskaitosFakturos();
 
         $form = $this->createFormBuilder()
             ->add('vardas', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => true))
@@ -52,6 +53,9 @@ class InvoiceController extends AbstractController
 
         $form->handleRequest($request);
 
+        $clientRepo = $doctrine->getRepository(Klientai::class);
+        $accountantRepo = $doctrine->getRepository(Buhalteriai::class);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $firstName = $form['vardas']->getData();
             $lastName = $form['pavarde']->getData();
@@ -60,6 +64,9 @@ class InvoiceController extends AbstractController
             $city = $form['miestasIrKodas']->getData();
             $orderNumber = $form['uzsakymoNumeris']->getData();
             $total = $form['suma']->getData();
+
+            $client = $clientRepo->findOneBy(['vardas' => $firstName, 'pavarde' => $lastName]);
+            $accountant = $accountantRepo->findOneBy(['idNaudotojas' => '1']);
 
             $fullName = $firstName . " " . $lastName;
             $vat = $total * 0.21;
@@ -84,6 +91,12 @@ class InvoiceController extends AbstractController
 
             $invoice->setFooternote("UAB Pirketa, 2021");
             $invoice->render($invoiceToPdf, 'D');
+
+                /*$saskaitaFaktura->setFkKlientasidNaudotojas($client->getIdNaudotojas());
+                $saskaitaFaktura->setFkBuhalterisidNaudotojas($accountant->getIdNaudotojas());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($saskaitaFaktura);
+                $entityManager->flush();*/
 
                 return $this->render('accountant/invoiceGenerated.html.twig', array('invoice' => $invoice));
                 /* I => Display on browser, D => Force Download, F => local path save, S => return document as string */
