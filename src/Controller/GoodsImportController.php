@@ -61,6 +61,18 @@ class GoodsImportController extends AbstractController
     public function goodsImported(Request $request): Response
     {
         $barkodas = $request->request->get('barkodas');
+
+        $exists = $this->conn->query("SELECT * FROM prekes WHERE barkodas = '$barkodas'");
+
+        if ($exists->num_rows > 0)
+        {
+            return $this->render('warehouse/goods_import.html.twig', [
+                'imported' => array(),
+                'errors' => array('Prekė su tokiu barkodu jau egzistuoja'),
+                'warehouses' => $this->getWarehouses()
+            ]);
+        }
+
         $kiekis = $request->request->get('kiekis');
         $kaina = $request->request->get('kaina');
         $pavadinimas = $request->request->get('pavadinimas');
