@@ -1,9 +1,9 @@
 <?php
 
 class Prekes_rusis {
-    public int $id_Prekes_rusis;
+    public int $id;
     public string $pavadinimas;
-    public int $fk_Prekebarkodas;
+    public Preke $preke;
 }
 
 ?>

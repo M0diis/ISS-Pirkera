@@ -6,8 +6,9 @@ class Sandelio_uzsakymas {
     public string $terminas;
     public int $apimtis;
     public int $busena;
-    public int $fk_Vadovasid_Naudotojas;
-    public int $fk_Sandelisid_Sandelis;
+    public Vadovas $vadovas;
+    public Sandelis $sandelis;
+    public array $prekes;
 }
 
 ?>
