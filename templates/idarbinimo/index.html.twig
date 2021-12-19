@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>PIRKETA - Darbuotojų įdarbinimas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <a href="/vadovo">Vadovo langas</a>
+    <a href="/uzsakymo">Užsakymo sudarymas</a>
+    <a href="/idarbinimo">Darbuotojų įdarbinimas</a>
+    <a href="/redagavimo">Darbuotojų redagavimas</a>
+    <a href="/statistikos">Perkamiausių prekių statistika</a>
+    <h1>Įdarbinimas</h1>
+    <form method="POST">
+    	<div class="container">
+		    <div class="row">
+                <div class="col-md-4">
+                    <h2>Naujas buhalteris:</h2>
+
+                    <label for="bvardas">Vardas:</label><br>
+                    <input type="text" id="bvardas" name="bvardas"><br>
+                    <label for="bpavarde">Pavardė:</label><br>
+                    <input type="text" id="bpavarde" name="bpavarde"><br>
+                    <label for="bvvardas">Vartotojo vardas:</label><br>
+                    <input type="text" id="bvvardas" name="bvvardas"><br>
+                    <label for="bsaskaita">Banko sąskaita:</label><br>
+                    <input type="text" id="bsaskaita" name="bsaskaita"><br>
+                    <label for="blaikas">Darbo laikas:</label><br>
+                    <input type="text" id="blaikas" name="blaikas"><br>
+                    <label for="bvirs">Viršvalandžių skaičius:</label><br>
+                    <input type="number" id="bvirs" name="bvirs"><br>
+                    <label for="batl">Atlyginimas:</label><br>
+                    <input type="number" id="batl" name="batl"><br>
+                    <label for="ofisai">Ofisas:</label><br>
+                    <select name="ofisai" id="ofisai">
+                        {% for ofisas in ofisai %}
+                            {% for dydis in dydziai %}
+                                {% if ofisas.dydis == dydis.id_Dydis %}
+                                    <option value = {{ofisas.id_Ofisas}}>ID:{{ofisas.id_Ofisas}}, Dydis:{{dydis.name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </select><br>
+                    <label for="pastas">El. paštas:</label><br>
+                    <input type="text" id="pastas" name="pastas"><br>
+                    <label for="nr">Tel. numeris:</label><br>
+                    <input type="text" id="nr" name="nr"><br>
+                    <label for="knr">Komp. numeris:</label><br>
+                    <input type="number" id="knr" name="knr"><br>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>Naujas pardavėjas:</h2>
+
+                    <label for="pvardas">Vardas:</label><br>
+                    <input type="text" id="pvardas" name="pvardas"><br>
+                    <label for="ppavarde">Pavardė:</label><br>
+                    <input type="text" id="ppavarde" name="ppavarde"><br>
+                    <label for="pvvardas">Vartotojo vardas:</label><br>
+                    <input type="text" id="pvvardas" name="pvvardas"><br>
+                    <label for="psaskaita">Banko sąskaita:</label><br>
+                    <input type="text" id="psaskaita" name="psaskaita"><br>
+                    <label for="plaikas">Darbo laikas:</label><br>
+                    <input type="text" id="plaikas" name="plaikas"><br>
+                    <label for="pvirs">Viršvalandžių skaičius:</label><br>
+                    <input type="number" id="pvirs" name="pvirs"><br>
+                    <label for="patl">Atlyginimas:</label><br>
+                    <input type="number" id="patl" name="patl"><br>
+                    <label for="apy">Apyvarta:</label><br>
+                    <input type="text" id="apy" name="apy"><br>
+                    <label for="vt">Parduotuvės vieta:</label><br>
+                    <input type="text" id="vt" name="vt"><br>
+                    <label for="kasa">Kasa:</label><br>
+                    <input type="number" id="kasa" name="kasa"><br>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>Naujas sandėlininkas:</h2>
+
+                    <label for="svardas">Vardas:</label><br>
+                    <input type="text" id="svardas" name="svardas"><br>
+                    <label for="spavarde">Pavardė:</label><br>
+                    <input type="text" id="spavarde" name="spavarde"><br>
+                    <label for="svvardas">Vartotojo vardas:</label><br>
+                    <input type="text" id="svvardas" name="svvardas"><br>
+                    <label for="ssaskaita">Banko sąskaita:</label><br>
+                    <input type="text" id="ssaskaita" name="ssaskaita"><br>
+                    <label for="slaikas">Darbo laikas:</label><br>
+                    <input type="text" id="slaikas" name="slaikas"><br>
+                    <label for="svirs">Viršvalandžių skaičius:</label><br>
+                    <input type="number" id="svirs" name="svirs"><br>
+                    <label for="satl">Atlyginimas:</label><br>
+                    <input type="number" id="satl" name="satl"><br>
+                    <label for="pareigos">Pareigos:</label><br>
+                    <select name="pareigos" id="pareigos">
+                        {% for pareiga in pareigos %}
+                            <option value = {{pareiga.id_Pareigos}}>{{pareiga.name}}</option>
+                        {% endfor %}
+                    </select><br>
+                    <label for="sandeliai">Sandėlis:</label><br>
+                    <select name="sandeliai" id="sandeliai">
+                        {% for sandelis in sandeliai %}
+                            {% for dydis in dydziai %}
+                                {% if sandelis.dydis == dydis.id_Dydis %}
+                                    <option value = {{sandelis.id_Sandelis}}>ID:{{sandelis.id_Sandelis}}, Dydis:{{dydis.name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </select><br>
+                    <label for="siuntos">Siuntų kiekis:</label><br>
+                    <input type="number" id="siuntos" name="siuntos"><br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button type="submit">Įdarbinti</button>
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {% endif %}
+
+        {% if msg %}
+            <div class="alert alert-success" role="alert">
+                {{msg}}
+            </div>
+        {% endif %}
+
+    </form>  
+</body>
+</html>
