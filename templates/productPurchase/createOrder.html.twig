@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>PIRKETA - Adding products to order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <h1>Create product order</h1>
+    {% if errors %}
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <form id="productForm" class="form" method="POST">
+        <label for="first_name">First name:</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" />
+        <label for="last_name">Last name:</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" />
+        <label for="email">Email:</label>
+        <input type="text" class="form-control" id="email" name="email" />
+        <button id="addButton" type="button" class="mt-3 mr-2 mb-3 btn btn-success" onclick="addProduct(event)">Add new</button>
+        <button type="submit" class="mt-3 mr-2 mb-3 btn btn-primary">Submit order</button>
+    </form>
+</body>
+<script>
+function addProduct(e) {
+    e.preventDefault();
+
+    let form = document.getElementById("productForm");
+    let addButton = document.getElementById("addButton");
+    let formItems = form.getElementsByClassName('form-group');
+
+    let newIndex = formItems.length;
+    let newId = "order-" + newIndex;
+
+    let formLabel = document.createElement('label');
+    let formInput = document.createElement('input');
+    let formDiv = document.createElement('div');
+    let formRemove = document.createElement('button');
+
+    formDiv.classList.add('form-group', 'm-3');
+
+    formLabel.htmlFor = newId;
+    formLabel.innerText = `Product number ${newIndex + 1}:`;
+
+    formInput.type = 'number';
+    formInput.classList.add('form-control');
+    formInput.id = newId;
+    formInput.name = newId;
+
+    formRemove.type = "button";
+    formRemove.innerText = "Remove";
+    formRemove.classList.add("mt-3", "mr-2", "mb-3", "btn", "btn-danger");
+    formRemove.onclick = removeProduct;
+    //formRemove.setAttribute('data-index', newIndex);
+
+    formDiv.appendChild(formLabel);
+    formDiv.appendChild(formInput);
+    formDiv.appendChild(formRemove);
+    form.insertBefore(formDiv, addButton);
+}
+
+function removeProduct(e) {
+    e.preventDefault();
+
+    let button = e.target;
+    button.parentElement.remove();
+
+    let form = document.getElementById('productForm');
+    let formItems = form.getElementsByClassName('form-group');
+    for (let i = 0; i < formItems.length; i++) {
+        let item = formItems[i];
+        let itemLabel = item.getElementsByTagName('label')[0];
+        let itemInput = item.getElementsByTagName('input')[0];
+        
+        itemLabel.innerText = `Product number ${i + 1}:`;
+        itemLabel.htmlFor = "order-" + i;
+
+        itemInput.id = "order-" + i;
+        itemInput.name = "order-" + i;
+    }
+}
+</script>
+</html>

@@ -46,7 +46,7 @@ class ProductRefundController extends AbstractController {
                 ]);
             }
 
-            $stmt = $this->connection->prepare("SELECT id_Preke, barkodas, kiekis FROM Prekes WHERE barkodas = ?");
+            $stmt = $this->connection->prepare("SELECT barkodas, kiekis FROM Prekes WHERE barkodas = ?");
             $stmt->bind_param("s", $barcode);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -58,10 +58,10 @@ class ProductRefundController extends AbstractController {
             }
 
             $result = $result->fetch_assoc();
-            $productId = $result['id_Preke'];
+            $productId = $result['barkodas'];
             $newCount = $result['kiekis'] + $count;
 
-            $stmt = $this->connection->prepare("UPDATE Prekes SET kiekis = ? WHERE Prekes.id_Preke = ?");
+            $stmt = $this->connection->prepare("UPDATE prekes SET kiekis = ? WHERE prekes.barkodas = ?");
             $stmt->bind_param("ii", $newCount, $productId);
             $result = $stmt->execute();
 

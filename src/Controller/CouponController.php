@@ -38,9 +38,12 @@ class CouponController extends AbstractController {
         public function postCreationView(Request $request) {
             $email = $request->request->get('email');
             $cost = $request->request->get('cost');
-            $sellerId = $request->request->get('sellerId');
 
-            $stmt = $this->connection->prepare("SELECT id_Dovanu_cekis, el_pastas FROM Klientai WHERE el_pastas = ?");
+            $session = $request->getSession();
+            //$sellerId = $session->get('userId');
+            $sellerId = 1;
+
+            $stmt = $this->connection->prepare("SELECT id_Naudotojas AS id, el_pastas FROM Klientai WHERE el_pastas = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -52,10 +55,10 @@ class CouponController extends AbstractController {
             }
 
             $clientId = $result->fetch_assoc()['id'];
-            $validUntil = date('Y-m-d', strtotime('+5 years'));
-            $code = hash("sha256", $email) + uniqid();
+            $validUntil = date('Y-m-d', strtotime('+1 years'));
+            $code = hash("sha256", $email).uniqid();
             $stmt = $this->connection->prepare("INSERT INTO Dovanu_cekiai (id_Dovanu_cekis, verte, galiojimo_data, kodas, fk_Pardavejasid_Naudotojas, fk_Klientasid_Naudotojas) VALUES (null, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("dssi", $cost, $validUntil, $code, $sellerId, $clientId);
+            $stmt->bind_param("dssii", $cost, $validUntil, $code, $sellerId, $clientId);
             $result = $stmt->execute();
 
             if (!$result) {
