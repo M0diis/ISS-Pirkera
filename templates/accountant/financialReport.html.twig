@@ -1,0 +1,68 @@
+{% extends 'accountant/baseAccountant.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}"/>
+    <style>
+
+
+        body {
+            text-align: center;
+        }
+
+        .align {
+            margin-top: 10%;
+            display: inline-block;
+        }
+
+        button {
+            margin-top: 5%;
+        }
+
+        table tr td {
+            border: 1px solid black;
+            font-size: 18px;
+            color: black;
+        }
+
+        td {
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+
+        .salary {
+            color: green;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="align">
+        {{ form_start(formReport) }}
+        {{ form_widget(formReport) }}
+        {{ form_end(formReport) }}
+
+        <table style="margin-top: 30px">
+            <tr>
+                <td>Dirbę darbuotojai</td>
+                <td>
+                    {% if parduotuves is defined %}
+                        {% for parduotuve in parduotuves %}
+                            {{ parduotuve.vardas }}
+                            {{ parduotuve.pavarde }}<br>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Apyvarta</td>
+                <td class="salary">
+                    {% if parduotuves is defined %}
+                        {{ apyvarta }} EUR
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

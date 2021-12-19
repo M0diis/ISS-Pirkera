@@ -1,0 +1,255 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20211219180701 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE ofisai DROP FOREIGN KEY ofisai_ibfk_1');
+        $this->addSql('ALTER TABLE sandeliai DROP FOREIGN KEY sandeliai_ibfk_1');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY uzsakymai_ibfk_1');
+        $this->addSql('ALTER TABLE sandelininkai DROP FOREIGN KEY sandelininkai_ibfk_1');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai DROP FOREIGN KEY sandelio_uzsakymai_ibfk_1');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY uzsakymai_ibfk_2');
+        $this->addSql('CREATE TABLE sandelio_uzsakymai_prekes (sandelio_uzsakymo_id INT NOT NULL, prekes_id INT NOT NULL, INDEX IDX_21BF4963A9E583A2 (sandelio_uzsakymo_id), INDEX IDX_21BF4963F23A3620 (prekes_id), PRIMARY KEY(sandelio_uzsakymo_id, prekes_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai_prekes ADD CONSTRAINT FK_21BF4963A9E583A2 FOREIGN KEY (sandelio_uzsakymo_id) REFERENCES sandelio_uzsakymai (id)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai_prekes ADD CONSTRAINT FK_21BF4963F23A3620 FOREIGN KEY (prekes_id) REFERENCES prekes (id)');
+        $this->addSql('DROP TABLE dydis');
+        $this->addSql('DROP TABLE mokejimo_budas');
+        $this->addSql('DROP TABLE pareigos');
+        $this->addSql('DROP TABLE prekes_rusys');
+        $this->addSql('DROP TABLE sandelio_uzsakymo_prekes');
+        $this->addSql('DROP TABLE uzsakymo_busena');
+        $this->addSql('DROP TABLE uzsakymo_prekes');
+        $this->addSql('ALTER TABLE adresai DROP FOREIGN KEY Adresas_Sandelis');
+        $this->addSql('DROP INDEX fk_Ofisasid_Ofisas ON adresai');
+        $this->addSql('DROP INDEX fk_Vadovasid_Naudotojas ON adresai');
+        $this->addSql('DROP INDEX fk_Klientasid_Naudotojas ON adresai');
+        $this->addSql('DROP INDEX fk_Sandelisid_Sandelis ON adresai');
+        $this->addSql('ALTER TABLE adresai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE adresai DROP fk_Sandelisid_Sandelis, DROP fk_Ofisasid_Ofisas, DROP fk_Vadovasid_Naudotojas, DROP fk_Klientasid_Naudotojas, CHANGE id_adresas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE adresai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE buhalteriai DROP FOREIGN KEY Buhalteris_Ofisas');
+        $this->addSql('DROP INDEX Buhalteris_Ofisas ON buhalteriai');
+        $this->addSql('ALTER TABLE buhalteriai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE buhalteriai ADD ofisas INT DEFAULT NULL, DROP fk_Ofisasid_Ofisas, DROP atlyginimas, CHANGE id_naudotojas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE buhalteriai ADD CONSTRAINT FK_CB6AD989FB618A21 FOREIGN KEY (ofisas) REFERENCES ofisai (id)');
+        $this->addSql('CREATE INDEX ofisas ON buhalteriai (ofisas)');
+        $this->addSql('ALTER TABLE buhalteriai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE dovanu_cekiai DROP FOREIGN KEY Dovanu_cekis_Pardavejas');
+        $this->addSql('ALTER TABLE dovanu_cekiai DROP FOREIGN KEY Dovanu_cekis_Klientas');
+        $this->addSql('ALTER TABLE dovanu_cekiai DROP FOREIGN KEY Dovanu_cekis_Uzsakymas');
+        $this->addSql('DROP INDEX Dovanu_cekis_Pardavejas ON dovanu_cekiai');
+        $this->addSql('DROP INDEX Dovanu_cekis_Klientas ON dovanu_cekiai');
+        $this->addSql('DROP INDEX fk_Uzsakymasid_Uzsakymas ON dovanu_cekiai');
+        $this->addSql('ALTER TABLE dovanu_cekiai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD pardavejas INT DEFAULT NULL, DROP fk_Pardavejasid_Naudotojas, DROP fk_Klientasid_Naudotojas, DROP fk_Uzsakymasid_Uzsakymas, CHANGE id_dovanu_cekis id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD CONSTRAINT FK_2ADD282F863F7C25 FOREIGN KEY (pardavejas) REFERENCES pardavejai (id)');
+        $this->addSql('CREATE INDEX pardavejas ON dovanu_cekiai (pardavejas)');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE klientai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE klientai CHANGE asmens_kodas asmens_kodas VARCHAR(255) NOT NULL, CHANGE telefono_numeris telefono_numeris VARCHAR(255) NOT NULL, CHANGE amzius amzius INT NOT NULL, CHANGE id_naudotojas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE klientai ADD PRIMARY KEY (id)');
+        $this->addSql('DROP INDEX dydis ON ofisai');
+        $this->addSql('ALTER TABLE ofisai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE ofisai ADD adresas INT DEFAULT NULL, CHANGE dydis dydis VARCHAR(255) NOT NULL, CHANGE id_ofisas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE ofisai ADD CONSTRAINT FK_603735B4F7FCD94 FOREIGN KEY (adresas) REFERENCES adresai (id)');
+        $this->addSql('CREATE INDEX adresas ON ofisai (adresas)');
+        $this->addSql('ALTER TABLE ofisai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE pardavejai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE pardavejai DROP atlyginimas, CHANGE id_naudotojas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE pardavejai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE prekes DROP FOREIGN KEY Preke_Sandelis');
+        $this->addSql('ALTER TABLE prekes DROP FOREIGN KEY Preke_Buhalteris');
+        $this->addSql('DROP INDEX Preke_Buhalteris ON prekes');
+        $this->addSql('DROP INDEX Preke_Sandelis ON prekes');
+        $this->addSql('ALTER TABLE prekes ADD id INT AUTO_INCREMENT NOT NULL, ADD sandelis INT DEFAULT NULL, DROP fk_Sandelisid_Sandelis, DROP fk_Buhalterisid_Naudotojas, CHANGE barkodas barkodas INT NOT NULL, DROP PRIMARY KEY, ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE prekes ADD CONSTRAINT FK_A00E835947674F1 FOREIGN KEY (sandelis) REFERENCES sandeliai (id)');
+        $this->addSql('CREATE INDEX sandelis ON prekes (sandelis)');
+        $this->addSql('DROP INDEX dydis ON sandeliai');
+        $this->addSql('ALTER TABLE sandeliai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE sandeliai CHANGE dydis dydis VARCHAR(255) NOT NULL, CHANGE id_sandelis id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE sandeliai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE sandelininkai DROP FOREIGN KEY Sandelininkas_Sandelis');
+        $this->addSql('DROP INDEX Sandelininkas_Sandelis ON sandelininkai');
+        $this->addSql('DROP INDEX pareigos ON sandelininkai');
+        $this->addSql('ALTER TABLE sandelininkai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE sandelininkai ADD atliktu_siuntu_kiekis INT NOT NULL, DROP atilktu_siuntu_kiekis, DROP fk_Sandelisid_Sandelis, DROP atlyginimas, CHANGE pareigos pareigos VARCHAR(255) NOT NULL, CHANGE id_naudotojas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE sandelininkai ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai DROP FOREIGN KEY Sandelio_uzsakymas_Vadovas');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai DROP FOREIGN KEY Sandelio_uzsakymas_Sandelis');
+        $this->addSql('DROP INDEX Sandelio_uzsakymas_Vadovas ON sandelio_uzsakymai');
+        $this->addSql('DROP INDEX Sandelio_uzsakymas_Sandelis ON sandelio_uzsakymai');
+        $this->addSql('DROP INDEX busena ON sandelio_uzsakymai');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD id INT AUTO_INCREMENT NOT NULL, ADD sandelis INT DEFAULT NULL, DROP fk_Vadovasid_Naudotojas, DROP fk_Sandelisid_Sandelis, CHANGE numeris numeris INT NOT NULL, CHANGE busena busena VARCHAR(255) NOT NULL, CHANGE uzsakymo_data uzsakymo_data DATETIME NOT NULL, CHANGE terminas terminas DATETIME NOT NULL, DROP PRIMARY KEY, ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD CONSTRAINT FK_AA16456D47674F1 FOREIGN KEY (sandelis) REFERENCES sandeliai (id)');
+        $this->addSql('CREATE INDEX sandelis ON sandelio_uzsakymai (sandelis)');
+        $this->addSql('ALTER TABLE saskaitos_fakturos DROP FOREIGN KEY Saskaita_faktura_Klientas');
+        $this->addSql('ALTER TABLE saskaitos_fakturos DROP FOREIGN KEY Saskaita_faktura_Buhalteris');
+        $this->addSql('DROP INDEX Saskaita_faktura_Buhalteris ON saskaitos_fakturos');
+        $this->addSql('DROP INDEX fk_Klientasid_Naudotojas ON saskaitos_fakturos');
+        $this->addSql('ALTER TABLE saskaitos_fakturos ADD id INT AUTO_INCREMENT NOT NULL, DROP fk_Buhalterisid_Naudotojas, DROP fk_Klientasid_Naudotojas, CHANGE numeris numeris INT NOT NULL, DROP PRIMARY KEY, ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY Uzsakymas_Pardavejas');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY Uzsakymas_Klientas');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY Uzsakymas_Saskaita_faktura');
+        $this->addSql('DROP INDEX Uzsakymas_Klientas ON uzsakymai');
+        $this->addSql('DROP INDEX mokejimo_budas ON uzsakymai');
+        $this->addSql('DROP INDEX busena ON uzsakymai');
+        $this->addSql('DROP INDEX Uzsakymas_Pardavejas ON uzsakymai');
+        $this->addSql('DROP INDEX fk_Saskaita_fakturanumeris ON uzsakymai');
+        $this->addSql('ALTER TABLE uzsakymai ADD id INT AUTO_INCREMENT NOT NULL, ADD klientas INT DEFAULT NULL, ADD saskaita_faktura INT DEFAULT NULL, DROP fk_Pardavejasid_Naudotojas, DROP fk_Klientasid_Naudotojas, DROP fk_Saskaita_fakturanumeris, CHANGE uzsakymo_numeris uzsakymo_numeris INT NOT NULL, CHANGE mokejimo_budas mokejimo_budas TINYINT(1) NOT NULL, CHANGE busena busena TINYINT(1) NOT NULL, CHANGE ivykdymo_data ivykdymo_data DATE NOT NULL, DROP PRIMARY KEY, ADD PRIMARY KEY (id)');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT FK_8FD77B06E777D966 FOREIGN KEY (klientas) REFERENCES klientai (id)');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT FK_8FD77B066AC1CCD5 FOREIGN KEY (saskaita_faktura) REFERENCES saskaitos_fakturos (id)');
+        $this->addSql('CREATE INDEX saskaita_faktura ON uzsakymai (saskaita_faktura)');
+        $this->addSql('CREATE INDEX klientas ON uzsakymai (klientas)');
+        $this->addSql('ALTER TABLE vadovai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE vadovai ADD adresas INT DEFAULT NULL, DROP atlyginimas, CHANGE id_naudotojas id INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE vadovai ADD CONSTRAINT FK_C67F47B04F7FCD94 FOREIGN KEY (adresas) REFERENCES adresai (id)');
+        $this->addSql('CREATE INDEX adresas ON vadovai (adresas)');
+        $this->addSql('ALTER TABLE vadovai ADD PRIMARY KEY (id)');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE dydis (id_Dydis INT NOT NULL, name CHAR(9) CHARACTER SET latin1 NOT NULL COLLATE `latin1_swedish_ci`, PRIMARY KEY(id_Dydis)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE mokejimo_budas (id_Mokejimo_budas INT NOT NULL, name CHAR(23) CHARACTER SET latin1 NOT NULL COLLATE `latin1_swedish_ci`, PRIMARY KEY(id_Mokejimo_budas)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE pareigos (id_Pareigos INT NOT NULL, name CHAR(20) CHARACTER SET latin1 NOT NULL COLLATE `latin1_swedish_ci`, PRIMARY KEY(id_Pareigos)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE prekes_rusys (pavadinimas VARCHAR(255) CHARACTER SET latin1 NOT NULL COLLATE `latin1_swedish_ci`, id_Prekes_rusis INT AUTO_INCREMENT NOT NULL, fk_Prekebarkodas INT NOT NULL, INDEX Prekes_rusis_Preke (fk_Prekebarkodas), PRIMARY KEY(id_Prekes_rusis)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE sandelio_uzsakymo_prekes (fk_Prekebarkodas INT NOT NULL, fk_Sandelio_uzsakymasnumeris INT NOT NULL, INDEX IDX_FBD31A4B3AC3EE84 (fk_Prekebarkodas), PRIMARY KEY(fk_Prekebarkodas, fk_Sandelio_uzsakymasnumeris)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE uzsakymo_busena (id_Uzsakymo_busena INT NOT NULL, name CHAR(13) CHARACTER SET latin1 NOT NULL COLLATE `latin1_swedish_ci`, PRIMARY KEY(id_Uzsakymo_busena)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE uzsakymo_prekes (fk_Prekebarkodas INT NOT NULL, fk_Uzsakymasuzsakymo_numeris INT NOT NULL, INDEX IDX_7786EE5D3AC3EE84 (fk_Prekebarkodas), PRIMARY KEY(fk_Prekebarkodas, fk_Uzsakymasuzsakymo_numeris)) DEFAULT CHARACTER SET latin1 COLLATE `latin1_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('ALTER TABLE prekes_rusys ADD CONSTRAINT Prekes_rusis_Preke FOREIGN KEY (fk_Prekebarkodas) REFERENCES prekes (barkodas)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymo_prekes ADD CONSTRAINT Sandelio_uzsakymo_prekes_Preke FOREIGN KEY (fk_Prekebarkodas) REFERENCES prekes (barkodas)');
+        $this->addSql('ALTER TABLE uzsakymo_prekes ADD CONSTRAINT Uzsakymo_prekes_Preke FOREIGN KEY (fk_Prekebarkodas) REFERENCES prekes (barkodas)');
+        $this->addSql('DROP TABLE sandelio_uzsakymai_prekes');
+        $this->addSql('ALTER TABLE adresai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE adresai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE adresai ADD fk_Sandelisid_Sandelis INT NOT NULL, ADD fk_Ofisasid_Ofisas INT NOT NULL, ADD fk_Vadovasid_Naudotojas INT NOT NULL, ADD fk_Klientasid_Naudotojas INT NOT NULL, CHANGE id id_Adresas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE adresai ADD CONSTRAINT Adresas_Sandelis FOREIGN KEY (fk_Sandelisid_Sandelis) REFERENCES sandeliai (id_Sandelis)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Ofisasid_Ofisas ON adresai (fk_Ofisasid_Ofisas)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Vadovasid_Naudotojas ON adresai (fk_Vadovasid_Naudotojas)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Klientasid_Naudotojas ON adresai (fk_Klientasid_Naudotojas)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Sandelisid_Sandelis ON adresai (fk_Sandelisid_Sandelis)');
+        $this->addSql('ALTER TABLE adresai ADD PRIMARY KEY (id_Adresas)');
+        $this->addSql('ALTER TABLE buhalteriai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE buhalteriai DROP FOREIGN KEY FK_CB6AD989FB618A21');
+        $this->addSql('DROP INDEX ofisas ON buhalteriai');
+        $this->addSql('ALTER TABLE buhalteriai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE buhalteriai ADD fk_Ofisasid_Ofisas INT NOT NULL, ADD atlyginimas INT NOT NULL, DROP ofisas, CHANGE id id_Naudotojas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE buhalteriai ADD CONSTRAINT Buhalteris_Ofisas FOREIGN KEY (fk_Ofisasid_Ofisas) REFERENCES ofisai (id_Ofisas)');
+        $this->addSql('CREATE INDEX Buhalteris_Ofisas ON buhalteriai (fk_Ofisasid_Ofisas)');
+        $this->addSql('ALTER TABLE buhalteriai ADD PRIMARY KEY (id_Naudotojas)');
+        $this->addSql('ALTER TABLE dovanu_cekiai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE dovanu_cekiai DROP FOREIGN KEY FK_2ADD282F863F7C25');
+        $this->addSql('DROP INDEX pardavejas ON dovanu_cekiai');
+        $this->addSql('ALTER TABLE dovanu_cekiai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD fk_Pardavejasid_Naudotojas INT NOT NULL, ADD fk_Klientasid_Naudotojas INT NOT NULL, ADD fk_Uzsakymasid_Uzsakymas INT DEFAULT NULL, DROP pardavejas, CHANGE id id_Dovanu_cekis INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD CONSTRAINT Dovanu_cekis_Pardavejas FOREIGN KEY (fk_Pardavejasid_Naudotojas) REFERENCES pardavejai (id_Naudotojas)');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD CONSTRAINT Dovanu_cekis_Klientas FOREIGN KEY (fk_Klientasid_Naudotojas) REFERENCES klientai (id_Naudotojas)');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD CONSTRAINT Dovanu_cekis_Uzsakymas FOREIGN KEY (fk_Uzsakymasid_Uzsakymas) REFERENCES uzsakymai (uzsakymo_numeris)');
+        $this->addSql('CREATE INDEX Dovanu_cekis_Pardavejas ON dovanu_cekiai (fk_Pardavejasid_Naudotojas)');
+        $this->addSql('CREATE INDEX Dovanu_cekis_Klientas ON dovanu_cekiai (fk_Klientasid_Naudotojas)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Uzsakymasid_Uzsakymas ON dovanu_cekiai (fk_Uzsakymasid_Uzsakymas)');
+        $this->addSql('ALTER TABLE dovanu_cekiai ADD PRIMARY KEY (id_Dovanu_cekis)');
+        $this->addSql('ALTER TABLE klientai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE klientai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE klientai CHANGE asmens_kodas asmens_kodas VARCHAR(255) CHARACTER SET latin1 DEFAULT \'NULL\' COLLATE `latin1_swedish_ci`, CHANGE telefono_numeris telefono_numeris VARCHAR(255) CHARACTER SET latin1 DEFAULT \'NULL\' COLLATE `latin1_swedish_ci`, CHANGE amzius amzius INT DEFAULT NULL, CHANGE id id_Naudotojas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE klientai ADD PRIMARY KEY (id_Naudotojas)');
+        $this->addSql('ALTER TABLE ofisai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE ofisai DROP FOREIGN KEY FK_603735B4F7FCD94');
+        $this->addSql('DROP INDEX adresas ON ofisai');
+        $this->addSql('ALTER TABLE ofisai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE ofisai DROP adresas, CHANGE dydis dydis INT NOT NULL, CHANGE id id_Ofisas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE ofisai ADD CONSTRAINT ofisai_ibfk_1 FOREIGN KEY (dydis) REFERENCES dydis (id_Dydis)');
+        $this->addSql('CREATE INDEX dydis ON ofisai (dydis)');
+        $this->addSql('ALTER TABLE ofisai ADD PRIMARY KEY (id_Ofisas)');
+        $this->addSql('ALTER TABLE pardavejai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE pardavejai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE pardavejai ADD atlyginimas INT NOT NULL, CHANGE id id_Naudotojas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE pardavejai ADD PRIMARY KEY (id_Naudotojas)');
+        $this->addSql('ALTER TABLE prekes MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE prekes DROP FOREIGN KEY FK_A00E835947674F1');
+        $this->addSql('DROP INDEX sandelis ON prekes');
+        $this->addSql('ALTER TABLE prekes DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE prekes ADD fk_Sandelisid_Sandelis INT NOT NULL, ADD fk_Buhalterisid_Naudotojas INT NOT NULL, DROP id, DROP sandelis, CHANGE barkodas barkodas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE prekes ADD CONSTRAINT Preke_Sandelis FOREIGN KEY (fk_Sandelisid_Sandelis) REFERENCES sandeliai (id_Sandelis)');
+        $this->addSql('ALTER TABLE prekes ADD CONSTRAINT Preke_Buhalteris FOREIGN KEY (fk_Buhalterisid_Naudotojas) REFERENCES buhalteriai (id_Naudotojas)');
+        $this->addSql('CREATE INDEX Preke_Buhalteris ON prekes (fk_Buhalterisid_Naudotojas)');
+        $this->addSql('CREATE INDEX Preke_Sandelis ON prekes (fk_Sandelisid_Sandelis)');
+        $this->addSql('ALTER TABLE prekes ADD PRIMARY KEY (barkodas)');
+        $this->addSql('ALTER TABLE sandeliai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE sandeliai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE sandeliai CHANGE dydis dydis INT NOT NULL, CHANGE id id_Sandelis INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE sandeliai ADD CONSTRAINT sandeliai_ibfk_1 FOREIGN KEY (dydis) REFERENCES dydis (id_Dydis)');
+        $this->addSql('CREATE INDEX dydis ON sandeliai (dydis)');
+        $this->addSql('ALTER TABLE sandeliai ADD PRIMARY KEY (id_Sandelis)');
+        $this->addSql('ALTER TABLE sandelininkai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE sandelininkai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE sandelininkai ADD fk_Sandelisid_Sandelis INT NOT NULL, ADD atlyginimas INT NOT NULL, CHANGE pareigos pareigos INT NOT NULL, CHANGE atliktu_siuntu_kiekis atilktu_siuntu_kiekis INT NOT NULL, CHANGE id id_Naudotojas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE sandelininkai ADD CONSTRAINT sandelininkai_ibfk_1 FOREIGN KEY (pareigos) REFERENCES pareigos (id_Pareigos)');
+        $this->addSql('ALTER TABLE sandelininkai ADD CONSTRAINT Sandelininkas_Sandelis FOREIGN KEY (fk_Sandelisid_Sandelis) REFERENCES sandeliai (id_Sandelis)');
+        $this->addSql('CREATE INDEX Sandelininkas_Sandelis ON sandelininkai (fk_Sandelisid_Sandelis)');
+        $this->addSql('CREATE INDEX pareigos ON sandelininkai (pareigos)');
+        $this->addSql('ALTER TABLE sandelininkai ADD PRIMARY KEY (id_Naudotojas)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai DROP FOREIGN KEY FK_AA16456D47674F1');
+        $this->addSql('DROP INDEX sandelis ON sandelio_uzsakymai');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD fk_Vadovasid_Naudotojas INT NOT NULL, ADD fk_Sandelisid_Sandelis INT NOT NULL, DROP id, DROP sandelis, CHANGE numeris numeris INT AUTO_INCREMENT NOT NULL, CHANGE uzsakymo_data uzsakymo_data DATE NOT NULL, CHANGE terminas terminas DATE NOT NULL, CHANGE busena busena INT NOT NULL');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD CONSTRAINT Sandelio_uzsakymas_Vadovas FOREIGN KEY (fk_Vadovasid_Naudotojas) REFERENCES vadovai (id_Naudotojas)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD CONSTRAINT Sandelio_uzsakymas_Sandelis FOREIGN KEY (fk_Sandelisid_Sandelis) REFERENCES sandeliai (id_Sandelis)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD CONSTRAINT sandelio_uzsakymai_ibfk_1 FOREIGN KEY (busena) REFERENCES uzsakymo_busena (id_Uzsakymo_busena)');
+        $this->addSql('CREATE INDEX Sandelio_uzsakymas_Vadovas ON sandelio_uzsakymai (fk_Vadovasid_Naudotojas)');
+        $this->addSql('CREATE INDEX Sandelio_uzsakymas_Sandelis ON sandelio_uzsakymai (fk_Sandelisid_Sandelis)');
+        $this->addSql('CREATE INDEX busena ON sandelio_uzsakymai (busena)');
+        $this->addSql('ALTER TABLE sandelio_uzsakymai ADD PRIMARY KEY (numeris)');
+        $this->addSql('ALTER TABLE saskaitos_fakturos MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE saskaitos_fakturos DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE saskaitos_fakturos ADD fk_Buhalterisid_Naudotojas INT NOT NULL, ADD fk_Klientasid_Naudotojas INT NOT NULL, DROP id, CHANGE numeris numeris INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE saskaitos_fakturos ADD CONSTRAINT Saskaita_faktura_Klientas FOREIGN KEY (fk_Klientasid_Naudotojas) REFERENCES klientai (id_Naudotojas)');
+        $this->addSql('ALTER TABLE saskaitos_fakturos ADD CONSTRAINT Saskaita_faktura_Buhalteris FOREIGN KEY (fk_Buhalterisid_Naudotojas) REFERENCES buhalteriai (id_Naudotojas)');
+        $this->addSql('CREATE INDEX Saskaita_faktura_Buhalteris ON saskaitos_fakturos (fk_Buhalterisid_Naudotojas)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Klientasid_Naudotojas ON saskaitos_fakturos (fk_Klientasid_Naudotojas)');
+        $this->addSql('ALTER TABLE saskaitos_fakturos ADD PRIMARY KEY (numeris)');
+        $this->addSql('ALTER TABLE uzsakymai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY FK_8FD77B06E777D966');
+        $this->addSql('ALTER TABLE uzsakymai DROP FOREIGN KEY FK_8FD77B066AC1CCD5');
+        $this->addSql('DROP INDEX saskaita_faktura ON uzsakymai');
+        $this->addSql('DROP INDEX klientas ON uzsakymai');
+        $this->addSql('ALTER TABLE uzsakymai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE uzsakymai ADD fk_Pardavejasid_Naudotojas INT NOT NULL, ADD fk_Klientasid_Naudotojas INT NOT NULL, ADD fk_Saskaita_fakturanumeris INT NOT NULL, DROP id, DROP klientas, DROP saskaita_faktura, CHANGE ivykdymo_data ivykdymo_data DATE DEFAULT \'NULL\', CHANGE mokejimo_budas mokejimo_budas INT DEFAULT NULL, CHANGE busena busena INT NOT NULL, CHANGE uzsakymo_numeris uzsakymo_numeris INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT Uzsakymas_Pardavejas FOREIGN KEY (fk_Pardavejasid_Naudotojas) REFERENCES pardavejai (id_Naudotojas)');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT uzsakymai_ibfk_1 FOREIGN KEY (mokejimo_budas) REFERENCES mokejimo_budas (id_Mokejimo_budas)');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT Uzsakymas_Klientas FOREIGN KEY (fk_Klientasid_Naudotojas) REFERENCES klientai (id_Naudotojas)');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT Uzsakymas_Saskaita_faktura FOREIGN KEY (fk_Saskaita_fakturanumeris) REFERENCES saskaitos_fakturos (numeris)');
+        $this->addSql('ALTER TABLE uzsakymai ADD CONSTRAINT uzsakymai_ibfk_2 FOREIGN KEY (busena) REFERENCES uzsakymo_busena (id_Uzsakymo_busena)');
+        $this->addSql('CREATE INDEX Uzsakymas_Klientas ON uzsakymai (fk_Klientasid_Naudotojas)');
+        $this->addSql('CREATE INDEX mokejimo_budas ON uzsakymai (mokejimo_budas)');
+        $this->addSql('CREATE INDEX busena ON uzsakymai (busena)');
+        $this->addSql('CREATE INDEX Uzsakymas_Pardavejas ON uzsakymai (fk_Pardavejasid_Naudotojas)');
+        $this->addSql('CREATE UNIQUE INDEX fk_Saskaita_fakturanumeris ON uzsakymai (fk_Saskaita_fakturanumeris)');
+        $this->addSql('ALTER TABLE uzsakymai ADD PRIMARY KEY (uzsakymo_numeris)');
+        $this->addSql('ALTER TABLE vadovai MODIFY id INT NOT NULL');
+        $this->addSql('ALTER TABLE vadovai DROP FOREIGN KEY FK_C67F47B04F7FCD94');
+        $this->addSql('DROP INDEX adresas ON vadovai');
+        $this->addSql('ALTER TABLE vadovai DROP PRIMARY KEY');
+        $this->addSql('ALTER TABLE vadovai ADD atlyginimas INT NOT NULL, DROP adresas, CHANGE id id_Naudotojas INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE vadovai ADD PRIMARY KEY (id_Naudotojas)');
+    }
+}
