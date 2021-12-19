@@ -11,7 +11,6 @@ namespace App\Controller;
         /**
          * @Route("/", name="login")
          */
-
         public function index(): Response
         {
             return $this->render('main/main.html.twig');

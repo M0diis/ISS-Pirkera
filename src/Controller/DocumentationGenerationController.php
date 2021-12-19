@@ -20,8 +20,6 @@ class DocumentationGenerationController extends AbstractController
     private RequestStack $requestStack;
     private mysqli $conn;
 
-
-
     private HttpClientInterface $client;
 
     public function __construct(RequestStack $requestStack, HttpClientInterface $client)
