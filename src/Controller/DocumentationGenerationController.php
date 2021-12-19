@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use EasyPost\EasyPost;
 use JetBrains\PhpStorm\NoReturn;
 use mysqli;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +13,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class DocumentationGenerationController extends AbstractController
 {
-    private string $api_key = "TEST_E9zoBMUuLdR8Ss3KRIdjJDMnuzmhWJH9o/pefNZ1nB8";
-    private string $api = "https://api.shipengine.com/v1/labels";
-
     private RequestStack $requestStack;
     private mysqli $conn;
 
@@ -24,8 +20,6 @@ class DocumentationGenerationController extends AbstractController
 
     public function __construct(RequestStack $requestStack, HttpClientInterface $client)
     {
-        EasyPost::setApiKey($this->api_key);
-
         $hostname = "localhost";
         $username = "root";
         $password = "";
