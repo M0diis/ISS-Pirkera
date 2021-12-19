@@ -65,39 +65,43 @@ class GoodsCollectionController extends AbstractController
 
         $arr = $result->fetch_assoc();
 
-        $curr_amt = $arr['kiekis'];
-        $id = $arr['id'];
-
-        if($curr_amt < $kiekis)
+        if(!isset($arr['pavadinimas']))
         {
-            $errors[] = "Nepakanka prekių. Sandėlyje yra: " . $curr_amt . ".";
-        }
-        else if($result->num_rows == 0)
-        {
-            $errors[] = "Prekės pavadinimas nerastas.";
+            $errors[] = "Tokios prekės nėra.";
         }
         else
         {
-            $session = $this->requestStack->getSession();
+            $curr_amt = $arr['kiekis'];
+            $id = $arr['id'];
 
-            $pending = $session->get('pending');
+            if($curr_amt < $kiekis)
+            {
+                $errors[] = "Nepakanka prekių. Sandėlyje yra: " . $curr_amt . ".";
+            }
+            else if($result->num_rows == 0)
+            {
+                $errors[] = "Prekės pavadinimas nerastas.";
+            }
+            else
+            {
+                $session = $this->requestStack->getSession();
 
-            if ($pending === null) {
-                $pending = array();
+                $pending = $session->get('pending');
+
+                if ($pending === null) {
+                    $pending = array();
+                }
+
+                $pending[] = array(
+                    'id' => $id,
+                    'kiekis' => $kiekis
+                );
+
+                $session->set('pending', $pending);
             }
 
-            $pending[] = array(
-                'id' => $id,
-                'kiekis' => $kiekis
-            );
-
-            $session->set('pending', $pending);
-
-            print_r($session->get('pending'));
+            $stmt->close();
         }
-
-        $stmt->close();
-
 
         return $this->render('warehouse/goods_collection.html.twig', [
             'errors' => $errors,
