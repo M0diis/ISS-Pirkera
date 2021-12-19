@@ -11,5 +11,5 @@ $lang['price']    = 'Kaina';
 $lang['discount'] = 'Nuolaida';
 $lang['vat']      = 'PVM';
 $lang['total']    = 'Viso';
-$lang['page']     = 'Page';
-$lang['page_of']  = 'of';
+$lang['page']     = 'Puslapis';
+$lang['page_of']  = 'iš';
