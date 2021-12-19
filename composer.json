@@ -4,9 +4,12 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-mysqli": "*",
+        "sensio/framework-extra-bundle": "^6.2",
+        "symfony/apache-pack": "^1.0",
         "composer/package-versions-deprecated": "1.11.99.4",
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -21,6 +24,11 @@
         "symfony/flex": "^1.17|^2",
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
+        "symfony/http-client": "5.4.*",
+        "symfony/runtime": "5.4.*",
+        "symfony/twig-bundle": "5.4.*",
+        "symfony/yaml": "5.4.*",
+      "ext-curl": "*"
         "symfony/http-foundation": "5.4.*",
         "symfony/maker-bundle": "^1.36",
         "symfony/proxy-manager-bridge": "5.4.*",
@@ -70,5 +78,8 @@
             "allow-contrib": false,
             "require": "5.4.*"
         }
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.36"
     }
 }

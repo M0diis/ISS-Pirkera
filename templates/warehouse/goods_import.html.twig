@@ -1,0 +1,53 @@
+{% extends 'wh_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-12">
+                {% if errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for error in errors %}
+                            {{ error }} <br>
+                        {% endfor %}
+                    </div>
+                {% elseif imported %}
+                    <div class="alert alert-info" role="alert">
+                        Krovinys išsaugotas.
+                    </div>
+                {% endif %}
+                <form method="post">
+                    <div class="form-control-sm">
+                        <label for="barkodas">Barkodas</label>
+                        <input type="text" class="form-control" name="barkodas" id="barkodas" placeholder="Prekės barkodas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="kiekis">Kiekis</label>
+                        <input type="text" class="form-control" name="kiekis" id="kiekis" placeholder="Prekių kiekis">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="kaina">Vnt. kaina</label>
+                        <input type="text" class="form-control" name="kaina" id="kaina" placeholder="Vieneto kaina">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="pavadinimas">Pavadinimas</label>
+                        <input type="text" class="form-control" name="pavadinimas" id="pavadinimas" placeholder="Pavadinimas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="sandelis">Sandėlis</label>
+                        <select class="form-select" aria-label="sandelis" name="sandelis">
+                            {% for warehouse in warehouses %}
+                                <option value="{{ warehouse.id_Sandelis }}">{{ warehouse.id_Sandelis }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block navigation %}
+    {{ parent() }}
+{% endblock %}
+

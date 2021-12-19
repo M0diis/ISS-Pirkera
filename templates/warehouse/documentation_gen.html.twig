@@ -1,0 +1,100 @@
+{% extends 'wh_base.html.twig' %}
+
+{% block navigation %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-12">
+                {% if errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for error in errors %}
+                            {{ error }} <br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if generated %}
+                    <div class="alert alert-success" role="alert">
+                        Sėkmingai sugeneruota dokumentacija. Nuoroda: {{ generated }}
+                    </div>
+                {% endif %}
+                <h5>Gavėjo informacija</h5>
+                <form method="post">
+                    <div class="form-control-sm">
+                        <label for="to_name">Vardas</label>
+                        <input type="text" class="form-control" name="to_name" id="to_name" placeholder="Gavėjo vardas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="to_company">Kompanija</label>
+                        <input type="text" class="form-control" name="to_company" id="to_company" placeholder="Kompanijos pavadinimas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="to_street">Adresas</label>
+                        <input type="text" class="form-control" name="to_street" id="to_street" placeholder="Gavėjo adresas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="to_city">Miestas</label>
+                        <input type="text" class="form-control" name="to_city" id="to_city" placeholder="Gavėjo miestas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="to_zipcode">Pašto kodas</label>
+                        <input type="text" class="form-control" name="to_zipcode" id="to_zipcode" placeholder="Gavėjo pašto kodas">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="to_phone">Tel. nr.</label>
+                        <input type="text" class="form-control" name="to_phone" id="to_phone" placeholder="Gavėjo telefono numeris">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="to_email">El. paštas</label>
+                        <input type="text" class="form-control" name="to_email" id="to_email" placeholder="Gavėjo elektroninis paštas">
+                    </div>
+                    <h5>Krovinio dydis</h5>
+                    <div class="form-control-sm">
+                        <label for="parcel_length">Ilgis</label>
+                        <input type="text" class="form-control" name="parcel_length" id="parcel_length" placeholder="Krovinio ilgis">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="parcel_width">Plotis</label>
+                        <input type="text" class="form-control" name="parcel_width" id="parcel_width" placeholder="Krovinio plotis">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="parcel_height">Aukštis</label>
+                        <input type="text" class="form-control" name="parcel_height" id="parcel_height" placeholder="Krovinio aukštis">
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="parcel_distance_unit">Matmenų vienetas</label>
+                        <select class="form-select" aria-label="parcel_distance_unit" name="parcel_distance_unit">
+                                <option value="cm">Milimetrai</option>
+                                <option value="mm">Centimetrai</option>
+                                <option value="m">Metrai</option>
+                        </select>
+                    </div>
+                    <div class="form-control-sm">
+                        <label for="parcel_weight">Svoris</label>
+                        <input type="number" class="form-control" name="parcel_weight" id="parcel_weight" placeholder="Krovinio svoris">
+                    </div>
+                    <div class="form-control-sm">
+                    <select class="form-select" aria-label="parcel_weight_unit" name="parcel_weight_unit">
+                        <option value="mg">Miligramai</option>
+                        <option value="g">Gramai</option>
+                        <option value="km">Kilogramai</option>
+                        <option value="t">Tonos</option>
+                    </select>
+                    </div>
+                    <h5>Sandėlis</h5>
+                    <div class="form-control-sm">
+                        <label for="warehouse">Sandėlis</label>
+                        <select class="form-select" aria-label="warehouse" name="warehouse">
+                            {% for warehouse in warehouses %}
+                                <option value="{{ warehouse.id_Sandelis }}">{{ warehouse.id_Sandelis }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generuoti</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
