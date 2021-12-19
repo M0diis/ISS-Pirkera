@@ -1,0 +1,30 @@
+{% extends 'accountant/baseAccountant.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}"/>
+    <style>
+
+
+        body {
+            text-align: center;
+        }
+
+        .align {
+            margin-top: 10%;
+            display: inline-block;
+        }
+
+        button {
+            margin-top: 5%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="align">
+        {{ form_start(formInvoice) }}
+        {{ form_widget(formInvoice) }}
+        {{ form_end(formInvoice) }}
+    </div>
+{% endblock %}
