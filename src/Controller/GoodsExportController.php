@@ -41,6 +41,13 @@ class GoodsExportController extends AbstractController
 
         $curr_pending = $session->get('pending');
 
+        if ($curr_pending == null)
+        {
+            $curr_pending = array();
+
+            $session->set('pending', $curr_pending);
+        }
+
         for($p = 0; $p < count($curr_pending); $p++)
         {
             $id = $curr_pending[$p]['id'];

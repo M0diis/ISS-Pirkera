@@ -6,7 +6,9 @@
             <div class="col-md-12">
                 {% if errors %}
                     <div class="alert alert-warning" role="alert">
-                        Įvyko klaida išsaugojant krovinį.
+                        {% for error in errors %}
+                            {{ error }} <br>
+                        {% endfor %}
                     </div>
                 {% elseif imported %}
                     <div class="alert alert-info" role="alert">
@@ -34,7 +36,7 @@
                         <label for="sandelis">Sandėlis</label>
                         <select class="form-select" aria-label="sandelis" name="sandelis">
                             {% for warehouse in warehouses %}
-                                <option value="{{ warehouse.id }}">{{ warehouse.pavadinimas }}</option>
+                                <option value="{{ warehouse.id_Sandelis }}">{{ warehouse.id_Sandelis }}</option>
                             {% endfor %}
                         </select>
                     </div>
