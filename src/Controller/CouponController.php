@@ -16,7 +16,7 @@ class CouponController extends AbstractController {
         {
             $hostname = "localhost";
             $username = "root";
-            $password = "Shinjitai99";
+            $password = "";
             $database = "pirketa";
             $port = 3306;
 
@@ -39,9 +39,7 @@ class CouponController extends AbstractController {
             $email = $request->request->get('email');
             $cost = $request->request->get('cost');
 
-            $session = $request->getSession();
-            //$sellerId = $session->get('userId');
-            $sellerId = 1;
+            $sellerId = $request->request->get('clerk_id');
 
             $stmt = $this->connection->prepare("SELECT id_Naudotojas AS id, el_pastas FROM Klientai WHERE el_pastas = ?");
             $stmt->bind_param("s", $email);

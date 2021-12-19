@@ -16,7 +16,7 @@ class ProductPurchaseController extends AbstractController {
         {
             $hostname = "localhost";
             $username = "root";
-            $password = "Shinjitai99";
+            $password = "";
             $database = "pirketa";
             $port = 3306;
 
@@ -105,8 +105,7 @@ class ProductPurchaseController extends AbstractController {
             }
 
             $session = $request->getSession();
-            //$clerkId = $session->get('userId'); // will depend on authentication
-            $clerkId = 1;
+            $clerkId = $request->request->get('clerk_id');
 
             $insertQuery = "INSERT INTO uzsakymai (uzsakymo_numeris, suma, ivykdymo_data, mokejimo_budas, busena, fk_Pardavejasid_Naudotojas, fk_Klientasid_Naudotojas, fk_Saskaita_fakturanumeris) VALUES (0, ?, NULL, NULL, 2, ?, ?, NULL)";
             $stmt = $this->connection->prepare($insertQuery);
